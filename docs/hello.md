@@ -1,8 +1,8 @@
 import React from "react";
-import { FluentEmojiHighContrastCupcake } from "./FluentEmojiHighContrastCupcake";
-import { MapClothingStore } from "./MapClothingStore";
-import { MdiLipstick } from "./MdiLipstick";
-import { RiDrinks2Fill } from "./RiDrinks2Fill";
+import { FluentEmojiHighContrastCupcake } from "./FluentEmojiHighContrastCupcake.svg";
+import { MapClothingStore } from "./MapClothingStore.svg";
+import { MdiLipstick } from "./MdiLipstick.svg";
+import { RiDrinks2Fill } from "./RiDrinks2Fill.svg";
 import image from "./image.svg";
 import line2 from "./line-2.svg";
 import line3 from "./line-3.svg";
