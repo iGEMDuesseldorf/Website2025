@@ -215,7 +215,7 @@ export default function ChemostatSimulator() {
                 <input
                   type="range"
                   min="1"
-                  max="50"
+                  max="100"
                   step="0.5"
                   value={params.spikeAmount}
                   onChange={(e) => setParams({...params, spikeAmount: parseFloat(e.target.value)})}
@@ -290,9 +290,9 @@ export default function ChemostatSimulator() {
                 <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} ticks={[0, 12, 24, 36, 48, 60, 72, 84, 96]} />
                 <YAxis stroke="#c4b5fd" label={{ value: 'g/L', angle: -90, position: 'insideLeft', fill: '#c4b5fd' }} />
                 <Tooltip contentStyle={{ backgroundColor: '#1e1b4b', border: '1px solid #7c3aed' }} />
-                <Legend />
+                <Legend align="center" verticalAlign="top" />
                 <Line type="monotone" dataKey="product" stroke="#ef4444" strokeWidth={2} dot={false} name="With inducer" />
-                {showBaseline && <Line type="monotone" dataKey="product_baseline" stroke="#9ca3af" strokeWidth={2} strokeDasharray="7 5" dot={false} name="No inducer" />}
+                {showBaseline && <Line type="monotone" dataKey="product_baseline" stroke="#9ca3af" strokeWidth={2} strokeDasharray="5 5" dot={false} name="No inducer" />}
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -306,7 +306,7 @@ export default function ChemostatSimulator() {
                 <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} ticks={[0, 12, 24, 36, 48, 60, 72, 84, 96]} />
                 <YAxis stroke="#c4b5fd" label={{ value: 'g/L', angle: -90, position: 'insideLeft', fill: '#c4b5fd' }} />
                 <Tooltip contentStyle={{ backgroundColor: '#1e1b4b', border: '1px solid #7c3aed' }} />
-                <Legend />
+                <Legend align="center" verticalAlign="top" />
                 <Line type="monotone" dataKey="biomass" stroke="#3b82f6" strokeWidth={2} dot={false} name="With inducer" />
                 {showBaseline && <Line type="monotone" dataKey="biomass_baseline" stroke="#9ca3af" strokeWidth={2} strokeDasharray="5 5" dot={false} name="No inducer" />}
               </LineChart>
@@ -322,7 +322,7 @@ export default function ChemostatSimulator() {
                 <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} ticks={[0, 12, 24, 36, 48, 60, 72, 84, 96]} />
                 <YAxis stroke="#c4b5fd" />
                 <Tooltip contentStyle={{ backgroundColor: '#1e1b4b', border: '1px solid #7c3aed' }} />
-                <Legend />
+                <Legend align="center" verticalAlign="top" />
                 <Line type="monotone" dataKey="enzyme" stroke="#10b981" strokeWidth={2} dot={false} name="With inducer" />
                 {showBaseline && <Line type="monotone" dataKey="enzyme_baseline" stroke="#9ca3af" strokeWidth={2} strokeDasharray="5 5" dot={false} name="No inducer" />}
               </LineChart>
