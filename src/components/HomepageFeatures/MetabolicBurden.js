@@ -50,7 +50,7 @@ export default function MetabolicBurden() {
         <defs>
           <radialGradient id="agarGradient" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#fff8dc" />
-            <stop offset="100%" stopColor="#f0e68c" />
+            <stop offset="100%" stopColor="#e0e0c0" />
           </radialGradient>
         </defs>
 
@@ -60,7 +60,7 @@ export default function MetabolicBurden() {
             key={cell.id}
             cx={cell.x}
             cy={cell.y}
-            r={cell.size}
+            r={cell.size/4}
             fill={getColorFromHealth(cell.health)}
             opacity="0.9"
           />
