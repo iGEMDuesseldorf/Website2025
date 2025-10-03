@@ -21,7 +21,7 @@ export default function UnstableProduction() {
 
   return (
     <div className="rounded-2xl border-3 border-purple-400 p-6 flex flex-col" style={{ minHeight: '400px' }}>
-      <h2 className="text-xl font-bold text-white text-center mb-3">📉 Unstable Production</h2>
+      <h2 className="text-xl font-bold text-white text-center mb-3">Unstable Production</h2>
       <div className="flex-1 relative pl-12 pb-6">
         <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ minHeight: '200px' }}>
           {/* Vertical axis */}
