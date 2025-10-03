@@ -20,7 +20,7 @@ export default function UnstableProduction() {
   }, [time]);
 
   return (
-    <div className="bg-purple-950 bg-opacity-60 rounded-2xl border-3 border-purple-400 p-6 flex flex-col" style={{ minHeight: '400px' }}>
+    <div className="rounded-2xl border-3 border-purple-400 p-6 flex flex-col" style={{ minHeight: '400px' }}>
       <h2 className="text-xl font-bold text-white text-center mb-3">📉 Unstable Production</h2>
       <div className="flex-1 relative pl-12 pb-6">
         <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ minHeight: '200px' }}>
@@ -54,7 +54,7 @@ export default function UnstableProduction() {
           <text x="0" y="90" fontSize="4" fill="#a78bfa">0%</text>
 
           {/* Y-axis label */}
-          <text x="3" y="50" fontSize="5" fill="#a78bfa" transform="rotate(-90 2,50)" textAnchor="middle">
+          <text x="5" y="50" fontSize="5" fill="#a78bfa" transform="rotate(-90 2,50)" textAnchor="middle">
             Product Concentration
           </text>
 
