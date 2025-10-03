@@ -42,7 +42,7 @@ export default function MetabolicBurden() {
 
   return (
     <div className="flex flex-col items-center p-6" style={{ minHeight: '400px', background: 'transparent' }}>
-      <h2 className="text-xl font-bold text-white text-center mb-3">Metabolic Burden</h2>
+      <h2 className="text-xl font-bold text-white text-center mb-3">  Metabolic Burden</h2>
       <svg viewBox="0 0 100 100" width="300" height="300">
         {/* Petri dish */}
         <circle cx="50" cy="50" r="40" fill="url(#agarGradient)" stroke="#999" strokeWidth="2" />

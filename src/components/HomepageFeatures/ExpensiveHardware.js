@@ -26,7 +26,7 @@ export default function ExpensiveHardware() {
             style={{ 
               backgroundColor: '#581c87',
               border: '3px solid #a78bfa',
-              padding: '2rem 3rem',
+              padding: '4rem 3rem',
               borderRadius: '1rem',
               boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3)',
               display: 'inline-block',
