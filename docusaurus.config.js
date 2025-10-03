@@ -35,7 +35,12 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
+  scripts: [
+    {
+      src: 'https://cdn.tailwindcss.com',
+      async: true,
+    },
+  ],
   presets: [
     [
       'classic',
