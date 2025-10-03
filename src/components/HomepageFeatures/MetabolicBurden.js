@@ -47,11 +47,11 @@ export default function MetabolicBurden() {
 
   return (
     <div className="bg-purple-950 bg-opacity-60 rounded-2xl border-3 border-purple-400 p-6 flex flex-col" style={{ minHeight: '400px' }}>
-      <h2 className="text-xl font-bold text-white text-center mb-3">😵 Metabolic Burden</h2>
+      <h2 className="text-xl font-bold text-white text-center mb-3">Metabolic Burden</h2>
       <div className="flex-1 flex items-center justify-center relative" style={{ minHeight: '250px' }}>
         <div className="relative w-full max-w-xs aspect-square">
           {/* Petri dish */}
-          <div className="absolute inset-0 rounded-full border-4 border-gray-400 bg-gradient-to-br from-gray-100 to-gray-200 shadow-2xl overflow-hidden">
+          <div className="absolute inset-0 rounded-full border-4 border-gray-400 bg-gradient-to-br from-gray-400 to-gray-300 shadow-2xl overflow-hidden">
             {/* Agar medium */}
             <div className="absolute inset-2 rounded-full bg-gradient-to-br from-amber-50 to-amber-100 opacity-60"></div>
             
@@ -95,7 +95,7 @@ export default function MetabolicBurden() {
           </div>
           
           {/* Petri dish lid rim */}
-          <div className="absolute inset-0 rounded-full border-2 border-gray-300 pointer-events-none" style={{ boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)' }}></div>
+          <div className="absolute inset-0 rounded-full border-2 border-gray-300 pointer-events-none" style={{ boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }}></div>
         </div>
       </div>
     </div>
