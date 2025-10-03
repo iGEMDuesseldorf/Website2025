@@ -20,7 +20,7 @@ export default function ExpensiveHardware() {
       <h2 className="text-xl font-bold text-white text-center mb-3">
         Expensive Hardware
       </h2>
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center" style={{ paddingTop: '2rem' }}>
         <div className="text-center">
           <div 
             style={{ 
