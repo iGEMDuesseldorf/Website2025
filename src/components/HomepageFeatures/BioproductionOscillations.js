@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-export default function BioproductionProblems() {
+export default function UnstableProduction() {
   const [time, setTime] = useState(0);
   const [productHistory, setProductHistory] = useState([]);
-  const [cellHappiness, setCellHappiness] = useState(100);
-  const [hardwareCost, setHardwareCost] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
