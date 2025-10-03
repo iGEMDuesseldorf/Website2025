@@ -13,6 +13,7 @@ export default function ChemostatSimulator() {
   const [spikeTimes, setSpikeTimes] = useState([10, 20, 30, 40, 50, 60, 70, 80, 90]);
   const [isRunning, setIsRunning] = useState(false);
   const [data, setData] = useState([]);
+  const [showBaseline, setShowBaseline] = useState(true);
 
   const runSimulation = () => {
     setIsRunning(true);
@@ -35,7 +36,7 @@ export default function ChemostatSimulator() {
     const dt = 0.33;
     const steps = Math.floor(maxT / dt);
     
-    
+    // Run simulation WITH inducer
     let w = 2, c = 5, Pr = 0, P = 0, I = 0, mu = 0;
     const results = [];
     
@@ -82,6 +83,44 @@ export default function ChemostatSimulator() {
           inducer: parseFloat(I.toFixed(3)),
           productivity: parseFloat((kbase * w + params.kprod * Pr * w).toFixed(3))
         });
+      }
+    }
+    
+    // Run baseline simulation WITHOUT inducer (no spikes)
+    let w_bl = 2, c_bl = 5, Pr_bl = 0, P_bl = 0, I_bl = 0, mu_bl = 0;
+    
+    for (let i = 0; i < steps; i++) {
+      const t = i * dt;
+      
+      // No spikes for baseline
+      const didt_bl = D * (Ir - I_bl) - params.kcons * I_bl;
+      mu_bl = params.muMax * (1 - w_bl / K) - (alpha_ind * Pr_bl);
+      const dwdt_bl = w_bl * (mu_bl - D);
+      const dcdt_bl = D * (cr - c_bl) - s * mu_bl * w_bl;
+      const dprdt_bl = ksyn * (Math.pow(I_bl, n) / (Math.pow(Ki, n) + Math.pow(I_bl, n))) - kdeg * Pr_bl - D * Pr_bl;
+      const dpdt_bl = kbase * w_bl + params.kprod * Pr_bl * w_bl - D * P_bl;
+      
+      // Update state
+      w_bl += dwdt_bl * dt;
+      c_bl += dcdt_bl * dt;
+      Pr_bl += dprdt_bl * dt;
+      P_bl += dpdt_bl * dt;
+      I_bl += didt_bl * dt;
+      
+      // Prevent negative values
+      w_bl = Math.max(0, w_bl);
+      c_bl = Math.max(0, c_bl);
+      Pr_bl = Math.max(0, Pr_bl);
+      P_bl = Math.max(0, P_bl);
+      I_bl = Math.max(0, I_bl);
+      
+      if (i % 3 === 0) {
+        const index = Math.floor(i / 3);
+        if (results[index]) {
+          results[index].biomass_baseline = parseFloat(w_bl.toFixed(3));
+          results[index].product_baseline = parseFloat(P_bl.toFixed(3));
+          results[index].enzyme_baseline = parseFloat(Pr_bl.toFixed(3));
+        }
       }
     }
     
@@ -176,7 +215,7 @@ export default function ChemostatSimulator() {
                 <input
                   type="range"
                   min="1"
-                  max="100"
+                  max="50"
                   step="0.5"
                   value={params.spikeAmount}
                   onChange={(e) => setParams({...params, spikeAmount: parseFloat(e.target.value)})}
@@ -223,10 +262,20 @@ export default function ChemostatSimulator() {
             <button
               onClick={runSimulation}
               disabled={isRunning}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-600"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-600 mb-2"
             >
               {isRunning ? 'Running...' : '▶ Run Simulation'}
             </button>
+
+            <label className="flex items-center gap-2 text-purple-200 text-sm">
+              <input
+                type="checkbox"
+                checked={showBaseline}
+                onChange={(e) => setShowBaseline(e.target.checked)}
+                className="w-4 h-4"
+              />
+              Show baseline (no inducer)
+            </label>
           </div>
         </div>
 
@@ -238,10 +287,12 @@ export default function ChemostatSimulator() {
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#581c87" />
-                <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} />
+                <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} ticks={[0, 12, 24, 36, 48, 60, 72, 84, 96]} />
                 <YAxis stroke="#c4b5fd" label={{ value: 'g/L', angle: -90, position: 'insideLeft', fill: '#c4b5fd' }} />
                 <Tooltip contentStyle={{ backgroundColor: '#1e1b4b', border: '1px solid #7c3aed' }} />
-                <Line type="monotone" dataKey="product" stroke="#ef4444" strokeWidth={2} dot={false} />
+                <Legend />
+                <Line type="monotone" dataKey="product" stroke="#ef4444" strokeWidth={2} dot={false} name="With inducer" />
+                {showBaseline && <Line type="monotone" dataKey="product_baseline" stroke="#9ca3af" strokeWidth={2} strokeDasharray="7 5" dot={false} name="No inducer" />}
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -252,10 +303,12 @@ export default function ChemostatSimulator() {
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#581c87" />
-                <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} />
+                <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} ticks={[0, 12, 24, 36, 48, 60, 72, 84, 96]} />
                 <YAxis stroke="#c4b5fd" label={{ value: 'g/L', angle: -90, position: 'insideLeft', fill: '#c4b5fd' }} />
                 <Tooltip contentStyle={{ backgroundColor: '#1e1b4b', border: '1px solid #7c3aed' }} />
-                <Line type="monotone" dataKey="biomass" stroke="#3b82f6" strokeWidth={2} dot={false} />
+                <Legend />
+                <Line type="monotone" dataKey="biomass" stroke="#3b82f6" strokeWidth={2} dot={false} name="With inducer" />
+                {showBaseline && <Line type="monotone" dataKey="biomass_baseline" stroke="#9ca3af" strokeWidth={2} strokeDasharray="5 5" dot={false} name="No inducer" />}
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -266,10 +319,12 @@ export default function ChemostatSimulator() {
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#581c87" />
-                <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} />
+                <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} ticks={[0, 12, 24, 36, 48, 60, 72, 84, 96]} />
                 <YAxis stroke="#c4b5fd" />
                 <Tooltip contentStyle={{ backgroundColor: '#1e1b4b', border: '1px solid #7c3aed' }} />
-                <Line type="monotone" dataKey="enzyme" stroke="#10b981" strokeWidth={2} dot={false} />
+                <Legend />
+                <Line type="monotone" dataKey="enzyme" stroke="#10b981" strokeWidth={2} dot={false} name="With inducer" />
+                {showBaseline && <Line type="monotone" dataKey="enzyme_baseline" stroke="#9ca3af" strokeWidth={2} strokeDasharray="5 5" dot={false} name="No inducer" />}
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -280,7 +335,7 @@ export default function ChemostatSimulator() {
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#581c87" />
-                <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} />
+                <XAxis dataKey="time" stroke="#c4b5fd" label={{ value: 'Time (h)', position: 'insideBottom', offset: -5, fill: '#c4b5fd' }} ticks={[0, 12, 24, 36, 48, 60, 72, 84, 96]} />
                 <YAxis stroke="#c4b5fd" label={{ value: 'g/L', angle: -90, position: 'insideLeft', fill: '#c4b5fd' }} />
                 <Tooltip contentStyle={{ backgroundColor: '#1e1b4b', border: '1px solid #7c3aed' }} />
                 <Line type="monotone" dataKey="inducer" stroke="#a855f7" strokeWidth={2} dot={false} />
