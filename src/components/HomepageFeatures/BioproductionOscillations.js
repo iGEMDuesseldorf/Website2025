@@ -54,7 +54,7 @@ export default function UnstableProduction() {
           <text x="0" y="90" fontSize="4" fill="#a78bfa">0%</text>
 
           {/* Y-axis label */}
-          <text x="5" y="50" fontSize="5" fill="#a78bfa" transform="rotate(-90 2,50)" textAnchor="middle">
+          <text x="10" y="50" fontSize="5" fill="#a78bfa" transform="rotate(-90 2,50)" textAnchor="middle">
             Product Concentration
           </text>
 
