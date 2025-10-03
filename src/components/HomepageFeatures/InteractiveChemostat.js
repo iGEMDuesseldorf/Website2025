@@ -31,7 +31,7 @@ export default function ChemostatSimulator() {
     const Ir = 0.05;
     const kbase = 0.002;
     
-    const maxT = 200;
+    const maxT = 240;
     const dt = 0.33;
     const steps = Math.floor(maxT / dt);
     
