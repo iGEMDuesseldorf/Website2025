@@ -23,15 +23,13 @@ export default function ExpensiveHardware() {
       <h2 className="text-xl font-bold text-white text-center mb-3">💸 Expensive Hardware</h2>
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-4xl font-bold text-yellow-300 mb-2">
+          {/* Special box for the number */}
+          <div className="inline-block bg-purple-700/20 text-purple-400 font-bold text-6xl px-8 py-6 rounded-xl shadow-lg mb-2">
             ${hardwareCost.toLocaleString()}
           </div>
           <div className="text-purple-200 text-sm">and counting...</div>
         </div>
       </div>
-      <p className="text-purple-200 text-center text-xs mt-2">
-        Lab equipment costs keep climbing 📈
-      </p>
     </div>
   );
 }
