@@ -17,7 +17,7 @@ export default function ExpensiveHardware() {
 
   return (
     <div className="rounded-2xl border-3 border-purple-400 p-6 flex flex-col" style={{ minHeight: '400px', background: 'transparent' }}>
-      <h2 className="text-xl font-bold text-white text-center mb-3" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+      <h2 className="text-xl font-bold text-white text-center mb-3">
         💸 Expensive Hardware
       </h2>
       <div className="flex-1 flex items-center justify-center">
@@ -34,7 +34,7 @@ export default function ExpensiveHardware() {
             }}
           >
             <div style={{ 
-              fontSize: '3.5rem', 
+              fontSize: '3.0rem', 
               fontWeight: 'bold', 
               color: '#fde047',
               lineHeight: '1'
