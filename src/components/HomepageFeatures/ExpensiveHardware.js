@@ -22,7 +22,7 @@ export default function ExpensiveHardware() {
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
           {/* Fully opaque, high-contrast box for the number */}
-          <div className="inline-block bg-purple-900 text-yellow-300 font-extrabold text-9xl px-12 py-10 rounded-3xl shadow-2xl mb-4">
+          <div className="inline-block bg-purple-900 text-yellow-300 font-extrabold text-5xl px-12 py-10 rounded-3xl shadow-2xl mb-4">
             ${hardwareCost.toLocaleString()}
           </div>
           <div className="text-purple-200 text-sm">and counting...</div>
