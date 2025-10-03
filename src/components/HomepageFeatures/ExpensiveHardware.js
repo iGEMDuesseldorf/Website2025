@@ -23,7 +23,7 @@ export default function ExpensiveHardware() {
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
           <div 
-            className="inline-block px-8 py-10 rounded-2xl shadow-2xl mb-2"
+            className="inline-block px-12 py-10 rounded-2xl shadow-2xl mb-2"
             style={{ 
               backgroundColor: '#581c87',
               border: '2px solid #a78bfa'
