@@ -23,7 +23,7 @@ export default function MetabolicBurden() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTime((t) => t + 1);
-    }, 150);
+    }, 10);
     return () => clearInterval(interval);
   }, []);
 
