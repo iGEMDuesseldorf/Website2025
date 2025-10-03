@@ -1,125 +1,118 @@
 import React, { useState, useEffect } from 'react';
 
-export default function BioproductionOscillations() {
+export default function BioproductionProblems() {
   const [time, setTime] = useState(0);
   const [productHistory, setProductHistory] = useState([]);
+  const [cellHappiness, setCellHappiness] = useState(100);
+  const [hardwareCost, setHardwareCost] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setTime((t) => t + 1);
-    }, 80);
+    }, 100);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    // Create oscillating product concentration that goes below target
-    const baseOscillation = 45 + 30 * Math.sin(time * 0.12) + 20 * Math.sin(time * 0.35);
-    const noise = (Math.random() - 0.5) * 15;
-    const productLevel = Math.max(10, Math.min(85, baseOscillation + noise));
-    
-    setProductHistory((prev) => [...prev, productLevel]);
+    // Oscillating graph
+    const baseOscillation = 60 + 20 * Math.sin(time * 0.1) + 15 * Math.sin(time * 0.28) + 10 * Math.cos(time * 0.45);
+    const noise = (Math.random() - 0.5) * 25;
+    const productLevel = Math.max(50, Math.min(90, baseOscillation + noise));
+    setProductHistory((prev) => [...prev, productLevel].slice(-60));
+
+    // Cell happiness decreases
+    setCellHappiness((h) => Math.max(0, h - 0.3));
+
+    // Hardware cost increases
+    setHardwareCost((c) => Math.min(17000, c + 50));
   }, [time]);
 
-  const maxPoints = 200;
-  const displayHistory = productHistory.slice(-maxPoints);
+  const cellEmoji = cellHappiness > 70 ? '😊' : cellHappiness > 40 ? '😐' : cellHappiness > 10 ? '😟' : '😵';
 
   return (
-    <div className="w-full h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 flex flex-col items-center justify-center p-8">
-      <div className="text-center mb-8">
-        <h1 className="text-5xl font-bold text-white mb-3">Unstable Production 📉</h1>
-        <p className="text-purple-200 text-xl">
-          Product concentration goes up and down... and up... and down...
-        </p>
-      </div>
-
-      {/* Main chart */}
-      <div className="relative w-full max-w-4xl h-96 bg-purple-950 bg-opacity-50 rounded-3xl border-4 border-purple-400 shadow-2xl p-8">
+    <div className="w-full bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 py-12 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6">
         
-        {/* Target line */}
-        <div 
-          className="absolute left-8 right-8 border-t-2 border-dashed border-green-400"
-          style={{ top: '35%' }}
-        >
-          <span className="absolute -top-6 right-0 text-green-300 text-sm font-bold bg-purple-900 px-3 py-1 rounded-full">
-            🎯 Target
-          </span>
+        {/* Panel 1: Unstable Production */}
+        <div className="bg-purple-950 bg-opacity-60 rounded-2xl border-3 border-purple-400 p-6 flex flex-col">
+          <h2 className="text-2xl font-bold text-white text-center mb-4">📉 Unstable Production</h2>
+          <div className="flex-1 relative pl-8 pb-6">
+            <svg className="w-full h-48">
+              {/* Y-axis */}
+              <line x1="0" x2="0" y1="0" y2="100%" stroke="#a78bfa" strokeWidth="2" />
+              {/* X-axis */}
+              <line x1="0" x2="100%" y1="100%" y2="100%" stroke="#a78bfa" strokeWidth="2" />
+              
+              {/* Target line */}
+              <line x1="0" x2="100%" y1="30%" y2="30%" stroke="#4ade80" strokeWidth="2" strokeDasharray="5,5" />
+              
+              {/* Graph line */}
+              {productHistory.length > 1 && (
+                <polyline
+                  points={productHistory
+                    .map((val, i) => {
+                      const x = (i / 59) * 100;
+                      const y = 100 - val;
+                      return `${x},${y}`;
+                    })
+                    .join(' ')}
+                  fill="none"
+                  stroke="#c084fc"
+                  strokeWidth="3"
+                />
+              )}
+            </svg>
+            {/* Y-axis label */}
+            <div className="absolute left-0 top-0 text-purple-300 text-xs">100%</div>
+            <div className="absolute left-0 bottom-0 text-purple-300 text-xs">0%</div>
+            {/* X-axis label */}
+            <div className="absolute bottom-0 right-0 text-purple-300 text-xs">Time →</div>
+          </div>
+          <p className="text-purple-200 text-center text-sm mt-2">
+            Product levels swing wildly - impossible to predict! 🎢
+          </p>
         </div>
 
-        {/* Chart area */}
-        <div className="absolute left-8 right-8 top-8 bottom-8">
-          <svg className="w-full h-full">
-            {/* Grid lines */}
-            {[25, 50, 75].map((val) => (
-              <line
-                key={val}
-                x1="0"
-                x2="100%"
-                y1={`${100 - val}%`}
-                y2={`${100 - val}%`}
-                stroke="#581c87"
-                strokeWidth="1"
-                opacity="0.3"
-              />
-            ))}
-
-            {/* Product concentration line */}
-            {displayHistory.length > 1 && (
-              <polyline
-                points={displayHistory
-                  .map((val, i) => {
-                    const x = (i / (maxPoints - 1)) * 100;
-                    const y = 100 - val;
-                    return `${x},${y}`;
-                  })
-                  .join(' ')}
-                fill="none"
-                stroke="#c084fc"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{
-                  filter: 'drop-shadow(0 0 10px rgba(192, 132, 252, 0.8))'
-                }}
-              />
-            )}
-
-            {/* Current value glow */}
-            {displayHistory.length > 0 && (
-              <>
-                <circle
-                  cx="100%"
-                  cy={`${100 - displayHistory[displayHistory.length - 1]}%`}
-                  r="12"
-                  fill="#a855f7"
-                  opacity="0.3"
-                  className="animate-ping"
-                />
-                <circle
-                  cx="100%"
-                  cy={`${100 - displayHistory[displayHistory.length - 1]}%`}
-                  r="6"
-                  fill="#c084fc"
-                />
-              </>
-            )}
-          </svg>
+        {/* Panel 2: Metabolic Burden */}
+        <div className="bg-purple-950 bg-opacity-60 rounded-2xl border-3 border-purple-400 p-6 flex flex-col">
+          <h2 className="text-2xl font-bold text-white text-center mb-4">😵 Metabolic Burden</h2>
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <div className="relative inline-block">
+                <div 
+                  className="text-9xl mb-4 transition-all duration-300"
+                  style={{
+                    filter: cellHappiness < 50 ? 'hue-rotate(180deg) brightness(0.8)' : 'none'
+                  }}
+                >
+                  🦠
+                </div>
+                <div className="absolute top-2 right-2 text-5xl">{cellEmoji}</div>
+              </div>
+              <div className="text-white text-xl font-bold">Cell Health: {Math.round(cellHappiness)}%</div>
+            </div>
+          </div>
+          <p className="text-purple-200 text-center text-sm mt-4">
+            Cells get exhausted from overproduction 😓
+          </p>
         </div>
 
-        {/* Axis labels */}
-        <div className="absolute left-2 top-8 text-purple-300 text-xs font-bold">100%</div>
-        <div className="absolute left-2 bottom-8 text-purple-300 text-xs font-bold">0%</div>
-        <div className="absolute bottom-2 left-8 text-purple-300 text-sm font-bold">Time →</div>
-      </div>
+        {/* Panel 3: Expensive Hardware */}
+        <div className="bg-purple-950 bg-opacity-60 rounded-2xl border-3 border-purple-400 p-6 flex flex-col">
+          <h2 className="text-2xl font-bold text-white text-center mb-4">💸 Expensive Hardware</h2>
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-5xl font-bold text-yellow-300 mb-2">
+                ${hardwareCost.toLocaleString()}
+              </div>
+              <div className="text-purple-200 text-base">and counting...</div>
+            </div>
+          </div>
+          <p className="text-purple-200 text-center text-sm mt-4">
+            Lab equipment costs keep climbing 📈
+          </p>
+        </div>
 
-      {/* Fun caption */}
-      <div className="mt-8 max-w-2xl text-center">
-        <p className="text-purple-200 text-lg leading-relaxed">
-          <span className="font-bold text-yellow-300">Why so wobbly?</span> Metabolic bottlenecks + 
-          limited feedback control = chaos! 🎢
-        </p>
-        <p className="text-purple-300 text-sm mt-2">
-          This is what happens when your cells can't keep their metabolic pathways balanced.
-        </p>
       </div>
     </div>
   );
