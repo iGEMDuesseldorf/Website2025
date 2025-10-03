@@ -5,7 +5,7 @@ export default function MetabolicBurden() {
   const [cells, setCells] = useState([]);
 
   useEffect(() => {
-    const initialCells = Array.from({ length: 25 }, (_, i) => {
+    const initialCells = Array.from({ length: 30 }, (_, i) => {
       const angle = Math.random() * Math.PI * 2;
       const radius = Math.random() * 35;
       return {
@@ -13,7 +13,7 @@ export default function MetabolicBurden() {
         x: 50 + Math.cos(angle) * radius,
         y: 50 + Math.sin(angle) * radius,
         health: 100,
-        size: Math.random() * 8 + 5 // smaller radius for better fit
+        size: Math.random() * 7 + 5 // smaller radius for better fit
       };
     });
     setCells(initialCells);
@@ -45,7 +45,7 @@ export default function MetabolicBurden() {
       <h2 className="text-xl font-bold text-white text-center mb-3">Metabolic Burden</h2>
       <svg viewBox="0 0 100 100" width="300" height="300">
         {/* Petri dish */}
-        <circle cx="50" cy="50" r="48" fill="url(#agarGradient)" stroke="#999" strokeWidth="2" />
+        <circle cx="50" cy="50" r="40" fill="url(#agarGradient)" stroke="#999" strokeWidth="2" />
 
         <defs>
           <radialGradient id="agarGradient" cx="50%" cy="50%" r="50%">
@@ -60,7 +60,7 @@ export default function MetabolicBurden() {
             key={cell.id}
             cx={cell.x}
             cy={cell.y}
-            r={cell.size/4}
+            r={cell.size/2}
             fill={getColorFromHealth(cell.health)}
             opacity="0.9"
           />
