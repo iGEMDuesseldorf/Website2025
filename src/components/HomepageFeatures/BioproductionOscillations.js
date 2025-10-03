@@ -25,12 +25,12 @@ export default function UnstableProduction() {
       <div className="flex-1 relative pl-12 pb-6">
         <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ minHeight: '200px' }}>
           {/* Vertical axis */}
-          <line x1="10" x2="10" y1="0" y2="100" stroke="#a78bfa" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
+          <line x1="10" x2="10" y1="0" y2="100" stroke="#a78bfa" strokeWidth="2" vectorEffect="non-scaling-stroke" />
           {/* Horizontal axis */}
-          <line x1="10" x2="100" y1="90" y2="90" stroke="#a78bfa" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
+          <line x1="10" x2="100" y1="90" y2="90" stroke="#a78bfa" strokeWidth="2" vectorEffect="non-scaling-stroke" />
 
           {/* Threshold line */}
-          <line x1="10" x2="100" y1={100 - 70} y2={100 - 70} stroke="#4ade80" strokeWidth="0.5" strokeDasharray="2,2" vectorEffect="non-scaling-stroke" />
+          <line x1="10" x2="100" y1={100 - 70} y2={100 - 70} stroke="#4ade80" strokeWidth="1" strokeDasharray="2,2" vectorEffect="non-scaling-stroke" />
 
           {/* Product line */}
           {productHistory.length > 1 && (
@@ -44,7 +44,7 @@ export default function UnstableProduction() {
                 .join(' ')}
               fill="none"
               stroke="#c084fc"
-              strokeWidth="2" // thicker line
+              strokeWidth="3" // thicker line
               vectorEffect="non-scaling-stroke"
             />
           )}
