@@ -49,7 +49,7 @@ export default function UnstableProduction() {
         <div className="absolute bottom-0 right-0 text-purple-300 text-xs">Time →</div>
       </div>
       <p className="text-purple-200 text-center text-xs mt-2">
-        Product levels swing wildly - impossible to predict! 🎢
+        **Unstable product concentration** 
       </p>
     </div>
   );
