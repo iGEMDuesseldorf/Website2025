@@ -31,7 +31,7 @@ export default function ChemostatSimulator() {
     const Ir = 0.05;
     const kbase = 0.002;
     
-    const maxT = 100;
+    const maxT = 200;
     const dt = 0.33;
     const steps = Math.floor(maxT / dt);
     
@@ -175,7 +175,7 @@ export default function ChemostatSimulator() {
                 <input
                   type="range"
                   min="1"
-                  max="10"
+                  max="100"
                   step="0.5"
                   value={params.spikeAmount}
                   onChange={(e) => setParams({...params, spikeAmount: parseFloat(e.target.value)})}
