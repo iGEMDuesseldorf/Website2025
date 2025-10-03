@@ -15,41 +15,50 @@ export default function UnstableProduction() {
     const baseOscillation = 60 + 20 * Math.sin(time * 0.1) + 15 * Math.sin(time * 0.28) + 10 * Math.cos(time * 0.45);
     const noise = (Math.random() - 0.5) * 25;
     const productLevel = Math.max(50, Math.min(90, baseOscillation + noise));
-    
+
     setProductHistory((prev) => [...prev, productLevel].slice(-60));
   }, [time]);
 
   return (
     <div className="bg-purple-950 bg-opacity-60 rounded-2xl border-3 border-purple-400 p-6 flex flex-col" style={{ minHeight: '400px' }}>
       <h2 className="text-xl font-bold text-white text-center mb-3">📉 Unstable Production</h2>
-      <div className="flex-1 relative pl-6 pb-4">
+      <div className="flex-1 relative pl-10 pb-6">
         <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ minHeight: '200px' }}>
-          <line x1="0" x2="0" y1="0" y2="100" stroke="#a78bfa" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
-          <line x1="0" x2="100" y1="100" y2="100" stroke="#a78bfa" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
-          <line x1="0" x2="100" y1="30" y2="30" stroke="#4ade80" strokeWidth="0.5" strokeDasharray="2,2" vectorEffect="non-scaling-stroke" />
-          
+          {/* Vertical axis */}
+          <line x1="10" x2="10" y1="0" y2="100" stroke="#a78bfa" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
+          {/* Horizontal axis */}
+          <line x1="10" x2="100" y1="90" y2="90" stroke="#a78bfa" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
+
+          {/* Threshold line */}
+          <line x1="10" x2="100" y1={100 - 70} y2={100 - 70} stroke="#4ade80" strokeWidth="0.5" strokeDasharray="2,2" vectorEffect="non-scaling-stroke" />
+
+          {/* Product line */}
           {productHistory.length > 1 && (
             <polyline
               points={productHistory
                 .map((val, i) => {
-                  const x = (i / 59) * 100;
+                  const x = 10 + (i / 59) * 90; // leave margin for y-axis
                   const y = 100 - val;
                   return `${x},${y}`;
                 })
                 .join(' ')}
               fill="none"
               stroke="#c084fc"
-              strokeWidth="1"
+              strokeWidth="2" // thicker line
               vectorEffect="non-scaling-stroke"
             />
           )}
+
+          {/* Y-axis labels */}
+          <text x="0" y="10" fontSize="4" fill="#a78bfa">100%</text>
+          <text x="0" y="90" fontSize="4" fill="#a78bfa">0%</text>
+
+          {/* X-axis label */}
+          <text x="95" y="95" fontSize="4" fill="#a78bfa">Time →</text>
         </svg>
-        <div className="absolute left-0 top-0 text-purple-300 text-xs">100%</div>
-        <div className="absolute left-0 bottom-0 text-purple-300 text-xs">0%</div>
-        <div className="absolute bottom-0 right-0 text-purple-300 text-xs">Time →</div>
       </div>
       <p className="text-purple-200 text-center text-xs mt-2">
-        **Unstable product concentration** 
+        **Unstable product concentration**
       </p>
     </div>
   );
