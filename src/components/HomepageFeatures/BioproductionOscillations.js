@@ -7,7 +7,7 @@ export default function UnstableProduction() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTime((t) => t + 1);
-    }, 100);
+    }, 80);
     return () => clearInterval(interval);
   }, []);
 
